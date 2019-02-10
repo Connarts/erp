@@ -12,7 +12,7 @@ if (isset($_SESSION['logged']) && $_SESSION['logged'] == 1) {
   die();
 }
 
-$con = mysqli_connect("localhost","","","connarts_connarts");
+$con = mysqli_connect("localhost","connarts_ossai","ossai'spassword","connarts_connarts");
 $u = mysqli_real_escape_string($con, $_SESSION['email']);
 
 ?>
@@ -221,15 +221,15 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
                 var table = $('#inventory').DataTable({
                     // 'data': d,
                     // scrollY: 300,
-                    dom: 'Bfrtip',
-                    responsive: true,
+                    // "autoWidth": true,
+                    responsive: true, // table width is still very wide (    /* width: 1074px; */) when window is minimaized
                     select: true,
                     select: {
                         // items: 'cells',
                         style: 'multi'
                     },
                     paging: true,
-                    dom: 'B<"clear">lfrtip', // for selecting the number of entries that can be shown per page
+                    dom: 'Bfrtip', // 'B<"clear">lfrtip' for selecting the number of entries that can be shown per page // '<"top"i>rt<"bottom"flp><"clear">'
                     buttons: ['copy', 'excel', 'pdf', 
                         {
                             text: 'Add',
@@ -263,6 +263,8 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
                                 var deleteSelectedRows = dt.rows('.selected').remove().draw();
                                 console.log('no. of delected rows', deleteSelectedRows[0].length);
                                 console.log('delected rows', deleteSelectedRows);
+
+                                console.log('before delection', dt.rows('.selected').remove().column());
                             }
                         }
                     ],

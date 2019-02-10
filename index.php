@@ -146,7 +146,7 @@ $_SESSION['logged'] = 0;
 </html>
 
 <?php
-  $con = mysqli_connect("localhost","","","connarts_connarts");
+  $con = mysqli_connect("localhost","connarts_ossai","ossai'spassword","connarts_connarts");
 
   if ( (isset($_POST['submit'])) && (!empty($_POST['email'])) && (!empty($_POST['password'])) ) {
 
