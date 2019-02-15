@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'conn.php';
 
 // Check connection
@@ -6,7 +7,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT * FROM inventory";
+$sql = "SELECT * FROM inventory WHERE brandname = '".$_SESSION['brandname']."'";
 $result = $conn->query($sql);
 $rows = array();
 if ($result->num_rows > 0) {
