@@ -1,21 +1,21 @@
 <?php
   session_start();
 
-    if ( !isset($_SESSION['logged']) && $_SESSION['logged'] !== true) {
+    if ( !isset($_SESSION['logged']) && ($_SESSION['logged'] !== true)) {
       $redirect = $_SERVER['PHP_SELF'];
-      header("Refresh: 5; URL=login.php");
+      header("Refresh: 5; URL=../index.php");
       echo "<h1>First LOGIN !</h2>";
       echo "(But if your browser doesn’t support this, " .
-      "<a href='login.php'>click here</a>)";
+      "<a href='../index.php'>click here</a>)";
       die();
     }
 
 
-  $con = mysqli_connect("localhost","connarts_ossai","ossai'spassword","connarts_connarts");
+  include 'conn.php';
   $sql = "SELECT * FROM products WHERE brandname = '".$_SESSION['client']."' ";
   $sql001 = "SELECT * FROM products WHERE ( productprice != '' AND cat != '' AND productname != '' AND brandname = '".$_SESSION['client']."' )"; #find out saleables
-  $result = mysqli_query($con, $sql);
-  $result001 = mysqli_query($con, $sql001);#find out saleables
+  $result = mysqli_query($conn, $sql);
+  $result001 = mysqli_query($conn, $sql001);#find out saleables
 
 ?>
 <!doctype html>

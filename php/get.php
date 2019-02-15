@@ -1,6 +1,5 @@
 <?php
-// Create connection
-$conn = new mysqli('localhost', 'connarts_ossai', 'ossai\'spassword', 'connarts_connarts');
+include 'conn.php';
 
 // Check connection
 if ($conn->connect_error) {
@@ -16,7 +15,7 @@ if ($result->num_rows > 0) {
         $rows[] = $row;
     }
 } else {
-    echo '{}'; //echo the empty error message.
+    echo '{ "data": {} }'; //echo the empty error message.
 }
 //echo '<hr>';
 echo '{ "data":' . ( json_encode($rows) )  . '}';

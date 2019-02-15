@@ -12,8 +12,8 @@ if (isset($_SESSION['logged']) && $_SESSION['logged'] == 1) {
   die();
 }
 
-$con = mysqli_connect("localhost","connarts_ossai","ossai'spassword","connarts_connarts");
-$u = mysqli_real_escape_string($con, $_SESSION['email']);
+$conn = mysqli_connect("localhost","connarts_ossai","ossai'spassword","connarts_connarts");
+$u = mysqli_real_escape_string($conn, $_SESSION['email']);
 
 ?>
 <!doctype html>
@@ -26,21 +26,26 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Connarts' ERP</title>
-    <meta name="description" content="Connarts' ERP. Focus more on your customers and your product.">
+    <title><?php echo $_SESSION['brandname'] ?>'s ERP</title> <!-- use php to find the last word of the brandname so we know if it's 's or ' -->
+    <meta name="description" content="Your ERP tool. Focus more on your customers and your product.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Connarts' Team">
 
-<!--         
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.2/b-1.5.4/r-2.2.2/sc-1.5.0/sl-1.2.6/datatables.min.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.2/b-1.5.4/r-2.2.2/sc-1.5.0/sl-1.2.6/datatables.min.js"></script>
--->
-
     <script src="jquery-3.3.1.min.js"></script>
+    <script src="dt/datatables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/b-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/b-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.js"></script>
+<!--     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.2/b-1.5.4/r-2.2.2/sc-1.5.0/sl-1.2.6/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.2/b-1.5.4/r-2.2.2/sc-1.5.0/sl-1.2.6/datatables.min.js"></script>
+     -->
     <!--
         Included libraries:
  *   DataTables 1.10.18, AutoFill 2.3.2, Buttons 1.5.4, Responsive 2.2.2, Scroller 1.5.0, Select 1.2.6
---><script src="dt/datatables.min.js"></script>
+-->
 
 
     <!--
@@ -58,9 +63,7 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
 
     <link rel="stylesheet" href="buttons.dataTables.min.css">
     
-    <link rel="icon" href="img\logo\conn - Copy (48x48).png">
-
-    <title>{Storename} Dashboard</title>
+    <link rel="icon" href="assets\conn - Copy (48x48).png">
 
     <!-- Custom styles for this template -->
     <link href="style/offcanvas.css" rel="stylesheet">
@@ -98,24 +101,24 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
             </div>
           </li> -->
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <!-- <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        </form> -->
       </div>
     </nav>
 
     <div class="nav-scroller bg-white box-shadow">
       <nav class="nav nav-underline">
         <a class="nav-link active" href="#">Inventory</a>
-        <a class="nav-link" href="#">Design catalogue</a>
-        <a class="nav-link" href="#">Suggestions</a>
+        <a class="nav-link" href="#">Customer Management</a>
+        <a class="nav-link" href="#">Design Catalogue</a>
+        <a class="nav-link" href="#">Project Management</a>
         <a class="nav-link" href="#">
-            Friends
+            Social Media Integration
             <span class="badge badge-pill bg-light align-text-bottom">27</span>
-          </a>
-        <a class="nav-link" href="#">Link</a>
-        <a class="nav-link" href="#">Link</a>
+        </a>
+        <a class="nav-link" href="#">Report and Analysis</a>
       </nav>
     </div>
 
@@ -137,21 +140,21 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
                         <div class="form-group">
                             <label for="image" class="col-form-label">Image:</label>
                             <br>
-                            <input type="file" name="image" accept="image/*" id="f"> <!--later allow multilple upload so we can different view of one product-->
+                            <input type="file" name="image" required accept="image/*" id="f"> <!--later allow multilple upload so we can different view of one product-->
                         </div>
                         <div class="form-group">
                             <label for="name" class="col-form-label">Name:</label>
-                            <input type="text" name="name" class="form-control" id="n">
+                            <input type="text" name="name" required class="form-control" id="n">
                         </div>
                         <div class="form-group">
                             <label for="stock" class="col-form-label">Stock:</label>
-                            <input type="number" name="stock" class="form-control" id="s">
+                            <input type="number" name="stock" required class="form-control" id="s">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Save draft</button>
-                    <button type="button" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                    <!-- <button type="button" class="btn btn-primary">Add</button> -->
                 </div>
             </div>
         </div>
@@ -165,8 +168,8 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
             <table class="table table-striped table-bordered" id="inventory">
                 <thead>
                     <tr>
-                        <th scope="col">Image</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Image</th>
                         <th scope="col">Stock</th>
                     </tr>
                 </thead>
@@ -222,49 +225,118 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
                     // 'data': d,
                     // scrollY: 300,
                     // "autoWidth": true,
-                    responsive: true, // table width is still very wide (    /* width: 1074px; */) when window is minimaized
+                    // responsive: true, // table width is still very wide (    /* width: 1074px; */) when window is minimaized
                     select: true,
                     select: {
                         // items: 'cells',
                         style: 'multi'
                     },
+                    "language": {
+                        "emptyTable": "Empty inventory. Click 'Add' to stock up your inventory."
+                    },
                     paging: true,
-                    dom: 'Bfrtip', // 'B<"clear">lfrtip' for selecting the number of entries that can be shown per page // '<"top"i>rt<"bottom"flp><"clear">'
+                    dom: 'Bfrtip', // 'B<"clear">lfrtip' for selecting the number of entries that can be shown per page // '<"top"i>rt<"bottom"flp><"clear">' , 'Bfrtip'
                     buttons: ['copy', 'excel', 'pdf', 
                         {
                             text: 'Add',
                             action: function (e, dt, node, config) {
-                                //dt.ajax.reload();
+                                // dt.ajax.reload();
                                 $('#add').modal('show');
 
                                 $('#add').on('shown.bs.modal', function (e) {
                                     // do something...do submit of events and update record in user interface
+                                    console.log('modal shown');
                                 });
 
+                                
+                                //
+                                $('#add').on('hide.bs.modal', function (e) {
+                                console.log('e', e);
+                                console.log('forms', document.forms);
+                                if (document.forms[0].elements[0].value !== '' && document.forms[0].elements[1].value !== '' && document.forms[0].elements[2].value !== '' ) {
+                                    
+                                    var n = document.forms[0].elements[1].value;
+                                    var s = document.forms[0].elements[2].value;
+                                    // do something...do submit of events and update record in user interface if the form is not empty
+                                    var fr = new FileReader();
+                                    fr.readAsDataURL(document.forms[0].elements[0].files[0]);
+                                    fr.onloadend = function (){
+                                        // add the new details to the db
+                                        var ad = table.row.add({ 
+                                                    name: n, 
+                                                    image: fr.result, 
+                                                    stock: s 
+                                                }).draw().node();
+                                        // color the newly added details red so we know it's the new one
+                                        $( ad )
+                                            .css( 'color', 'red' )
+                                            .animate( { color: 'black' } );
 
+                                    }
+
+                                    // --- geting the form data
+                                    var formData = new FormData(document.getElementById('addToStock'));
+                                    formData.append ('brandname', <?php echo  '"'. $_SESSION['brandname'] . '"'; // puts it on quotes, like a string in js?> );
+                                    console.log('formData', formData);
+                                    // var fileField = document.querySelector("input[type='file']");
+
+                                    // formData.append('username', 'abc123');
+                                    // formData.append('avatar', fileField.files[0]);
+
+                                    fetch('php/put.php', {
+                                        method: 'POST',
+                                        body: formData
+                                    })
+                                        .then(response => { console.log(response); /* response.json(); // response is like already in json, if this logs then success! */ })
+                                        .catch(error => console.error('?? Error:', error));
+
+                                    // empty the form
+                                    document.forms[0].reset();
+            
+                                }
+
+                            }).bind();
+                                //
                             }
                         }
                     , 
                         {
-                            text: 'Selected?',
+                            text: 'Delete selected rows',
                             action: function (e, dt, node, config) {
+                                var deleteSelectedRows = dt.rows('.selected');
+                                console.log('delected rows', dt.rows('.selected').data());
 
-                                var selectedRows = dt.rows({ selected: true }).data();
-                                console.log('no. of selected rows', selectedRows.length);
-                                console.log('selected rows', selectedRows);
+                                console.log('no. of delected rows', deleteSelectedRows.data().length);
+
+                                // to delete from server
+                                // var data_ = {name: 'ew--we'}; // doesn't work, maybe I'm not doing it right!
+                                const data =  new FormData ();
+                                // data.append ('name[]', 1);
+                                // data.append ('stock[]', 2);
+
+                                var length = deleteSelectedRows.data().length ;
+                                for (let index = 0; index < length; index++) {
+                                    const element = deleteSelectedRows.data()[index];
+                                    console.log(index, element);
+                                    data.append ('name[]', element.name);
+                                    data.append ('stock[]', element.stock);
+                                }
+
+                                data.append ('brandname', <?php echo  '"'. $_SESSION['brandname'] . '"'; // puts it on quotes, like a string in js?>);
+
+                                fetch('php/delete.php', {
+                                method: 'POST', // or 'PUT'
+                                body: data, // data can be `string` or {object}!
+                                headers:{
+                                    // 'Content-Type': 'application/json'
+                                }
+                                }).then(res => {console.log('Response', res);})
+                                .then(response => console.log('Success:', JSON.stringify(response)))
+                                .catch(error => console.error('Error:', error));
 
 
-                            }
-                        }
-                    , 
-                        {
-                            text: 'delete selected rows',
-                            action: function (e, dt, node, config) {
-                                var deleteSelectedRows = dt.rows('.selected').remove().draw();
-                                console.log('no. of delected rows', deleteSelectedRows[0].length);
-                                console.log('delected rows', deleteSelectedRows);
-
-                                console.log('before delection', dt.rows('.selected').remove().column());
+                                // must be the last thing!
+                                deleteSelectedRows.remove().draw();
                             }
                         }
                     ],
@@ -274,7 +346,7 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
                         { "data": "name" },
                         {
                             "render": function (data, type, JsonResultRow, meta) {
-                                console.log(data, type, JsonResultRow, meta);
+                                // console.log(data, type, JsonResultRow, meta);
                                 // console.log('checking MIME type', JsonResultRow.image.slice(JsonResultRow.image.indexOf('d'), JsonResultRow.image.indexOf('/')));
                                 var ck = JsonResultRow.image.slice(JsonResultRow.image.indexOf('d'), JsonResultRow.image.indexOf('/')+1);
                                 return '<img src=' + (ck == /** check if it starts with data:image/ */ 'data:image/' ?  JsonResultRow.image  : 'images/' + JsonResultRow.image ) + ' class="img-fluid" alt="Image of ' + JsonResultRow.name + '">';
@@ -286,40 +358,9 @@ $u = mysqli_real_escape_string($con, $_SESSION['email']);
                 });
 
 
-                $('#add').on('hide.bs.modal', function (e) {
-                    console.log('e', e);
-                    if (document.forms[0].elements[0].value !== '' && document.forms[0].elements[1].value !== '' && document.forms[0].elements[2].value !== '' ) {
-                     
-                        // do something...do submit of events and update record in user interface if the form is not empty
-                        var fr = new FileReader();
-                        fr.onload = function () {
-                            var i = new Image;
-                            i.src = fr.result;
-                            console.log('fr =', fr);
-                            // this automatically adds (dummy) data to the inventory. we want to add data from the form.
-                            var dt = $.fn.DataTable.tables()[0];
-                            // dt.row.add({ name: 'sds ', image: fr.result, stock: 'sdfdsja' }).draw(false);
-                            table.row.add({ name: document.forms[0].elements[1].value, image: fr.result, stock: document.forms[0].elements[2].value }).draw(false);
-                        }
-                        fr.readAsDataURL(document.forms[0].elements[0].files[0]);
+                
 
-                        // --- geting the form data
-                        var formData = new FormData(document.getElementById('addToStock'));
-                        // var fileField = document.querySelector("input[type='file']");
-
-                        // formData.append('username', 'abc123');
-                        // formData.append('avatar', fileField.files[0]);
-
-                        fetch('php/put.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                            .then(response => { console.log(response); /* response.json(); // response is like already in json, if this logs then success! */ })
-                            .catch(error => console.error('?? Error:', error));
-   
-                    }
-
-                }).bind(table);
+                
 
         });
 
