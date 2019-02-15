@@ -15,12 +15,11 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) { #$row = mysql_fetch_object($result)
         $rows[] = $row;
     }
+
+    echo '{ "data":' . ( json_encode($rows) )  . '}';
 } else {
     echo '{ "data": {} }'; //echo the empty error message.
 }
-//echo '<hr>';
-echo '{ "data":' . ( json_encode($rows) )  . '}';
-//echo '<hr>';
  
 $conn->close();
 
