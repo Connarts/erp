@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2019 at 04:58 PM
+-- Generation Time: Feb 15, 2019 at 10:47 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -43,7 +43,13 @@ CREATE TABLE `clients` (
 
 INSERT INTO `clients` (`brandname`, `email`, `logo`, `password`, `location`, `time`, `phone`, `brand_desc`) VALUES
 ('oh well', 'aw2jks@jk.lsd', 'oh well_logojpeg', 'pass', 'jsidn iwi wiewu', '2018-06-04 18:36:37', '09000773382', ''),
-('asdqdqw', 'sade@gmail.com', '', 'pass', '', '2019-02-02 23:56:49', '', '');
+('elihs9ja', 'elihs9ja@yahoo.com', 'elihs logo.jpg', 'pobosky*#07707', '', '2018-03-14 10:42:32', '09055555255', ''),
+('Hornix Apparels', 'hornixapparels@gmail.com', 'IMG_20171217_123143.jpg', 'h0r150nt3', '', '2017-12-17 11:33:00', '08090902210', ''),
+('ElevenTwenty3', 'man4afo@yahoo.com', 'C110F546-73EF-4012-A3BA-2EB79B39BFD6.jpe', 'Afolabi12', '', '2017-11-13 18:11:26', '0', ''),
+('Marc Ray', 'marcraycreations@gmail.com', 'IMG_20171217_195822_332.jpg', 'sphinx10', '', '2017-12-17 18:59:55', '08037775353', ''),
+('asdqdqw', 'sade@gmail.com', '', 'pass', '', '2019-02-02 23:56:49', '', ''),
+('Imprint Nigeria', 'vic3official@yahoo.com', 'IMG_20170825_123042_471.jpg', 'yhd763h', '', '2017-11-13 12:40:36', '0', ''),
+('Iycraftit ', 'voke.kodje@gmail.com', 'IMG-20171107-WA0001.jpg', 'metalgear1', '', '2017-11-15 03:05:31', '2147483647', '');
 
 -- --------------------------------------------------------
 
@@ -81,18 +87,17 @@ CREATE TABLE `inventory` (
   `name` varchar(40) NOT NULL,
   `image` varchar(50) NOT NULL,
   `stock` int(12) NOT NULL,
-  `brand_name` varchar(30) NOT NULL,
-  `input_time` varchar(15) NOT NULL
+  `brandname` varchar(30) NOT NULL,
+  `input_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`name`, `image`, `stock`, `brand_name`, `input_time`) VALUES
-('rwtw3', 'desc02.jpg', 32, '', ''),
-('dfs dfssd ', 'desc01.jpg', 58, '', ''),
-('ewwe', 'info01.jpg', 21, '', '');
+INSERT INTO `inventory` (`name`, `image`, `stock`, `brandname`, `input_time`) VALUES
+('ewihq8ih9 ui', 'image243.jpeg', 21, '', '0000-00-00 00:00:00'),
+('wer weq', 'image270.jpeg', 112, 'oh well', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
